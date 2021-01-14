@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:12.4-alpine
+    volumes:
+      - ./db/init.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./db/demo_small.sql:/base/db.sql
+      # - ./db/demo_big.sql:/base/db.sql
+    ports:
+      - "6432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    command: ["postgres", "-c", "log_statement=all"]
